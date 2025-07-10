@@ -3856,7 +3856,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Priod From  Date</Value>
+                              <Value>Priod To Date</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -3898,14 +3898,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="priod_from_date">
+                    <Textbox Name="Textbox24">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!priod_from_date.Value</Value>
+                              <Value>=Fields!priod_to_date.Value</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>
@@ -3914,7 +3914,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>priod_from_date</rd:DefaultName>
+                      <rd:DefaultName>Textbox24</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -3961,7 +3961,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Priod To Date</Value>
+                              <Value>Priod From Date</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -4010,7 +4010,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=IIf(IsNothing(Fields!isRunning.Value) OR Trim(Fields!isRunning.Value) = "", Fields!priod_to_date.Value, Fields!isRunning.Value)</Value>
+                              <Value>=Fields!priod_from_date.Value</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>

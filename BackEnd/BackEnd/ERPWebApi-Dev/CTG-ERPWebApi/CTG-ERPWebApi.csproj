@@ -59,7 +59,9 @@
 		<Content Remove="wwwroot\reportfile\business\applicant\rptApplicantCV000.rdlc" />
 		<Content Remove="wwwroot\reportfile\business\applicant\rptApplicantCV01.rdlc" />
 		<Content Remove="wwwroot\reportfile\business\applicant\rptApplicantCV1.rdlc" />
+		<Content Remove="wwwroot\reportfile\business\applicant\rptApplicantCVx1.rdlc" />
 		<Content Remove="wwwroot\reportfile\business\applicant\rptApplicantProfileCV.rdlc" />
+		<Content Remove="wwwroot\reportfile\business\applicant\rptApplicantProfileCVx1.rdlc" />
 		<Content Remove="wwwroot\reportfile\business\quotations\rptQuotation_P_R_CAT000001.rdlc" />
 		<Content Remove="wwwroot\reportfile\business\quotations\rptQuotation_P_R_CAT000002.rdlc" />
 		<Content Remove="wwwroot\reportfile\business\quotations\rptQuotation_P_R_CAT000003.rdlc" />
@@ -98,11 +100,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="wwwroot\reportfile\business\applicant\rptApplicantProfileCV.rdlc" />
-		<None Include="wwwroot\reportfile\business\applicant\rptApplicantCV000.rdlc" />
 		<None Include="wwwroot\reportfile\business\applicant\rptApplicantCV.rdlc" />
+		<None Include="wwwroot\reportfile\business\applicant\rptApplicantProfileCVx1.rdlc" />
+		<None Include="wwwroot\reportfile\business\applicant\rptApplicantCV000.rdlc" />
+		<None Include="wwwroot\reportfile\business\applicant\rptApplicantCVx1.rdlc" />
 		<None Include="wwwroot\reportfile\business\applicant\rptApplicantCV01.rdlc" />
 		<None Include="wwwroot\reportfile\business\applicant\rptApplicantCV1.rdlc" />
+		<None Include="wwwroot\reportfile\business\applicant\rptApplicantProfileCV.rdlc" />
 		<None Include="wwwroot\reportfile\business\quotations\rptQuotation_P_R_CAT000004.rdlc" />
 		<None Include="wwwroot\reportfile\business\quotations\rptQuotation_P_R_CAT000006.rdlc" />
 		<None Include="wwwroot\reportfile\business\quotations\rptQuotation_P_R_CAT000007.rdlc" />

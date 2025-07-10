@@ -401,6 +401,38 @@ namespace DataFactories.Infrastructure.common.dropdown
                 listuserInfo
             };
         }
+
+
+        //user info for role
+        public async Task<object> getaProfileInfoById(string id)
+        {
+            object listuserInfo = null; object result = null;
+            try
+            {
+                using (_ctxOr = new ModelContext())
+                {
+                    listuserInfo = await (from tct in _ctxOr.TJobApplicantMainMasters
+                                          where tct.Email == id
+                                          select new
+                                          {
+                                              oid = tct.Oid,
+                                              JobOid = tct.Jobid,
+                                              profileOid= tct.Profileoid,
+                                              email=tct.Email
+                                          }
+                                      ).ToListAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logs.Bug(ex);
+            }
+
+            return result = new
+            {
+                listuserInfo
+            };
+        }
         //End
 
 

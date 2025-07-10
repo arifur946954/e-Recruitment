@@ -23,7 +23,7 @@
                                    <ng-select2  formControlName="jobTitle" [options]="options"
                                         [allowClear]="true" id="jobTitle" name="job" [data]="jobPostList"
                                         [placeholder]="'Select Job Title'"
-                                        (valueChanged)="getApplicationList()"
+                                        (valueChanged)="onJobTitleChanged($event)"
                                         >
                                         
                                   </ng-select2>
@@ -395,7 +395,7 @@
                <th scope="col">Name</th>
                <th scope="col">Mobile Number</th>
                 <th scope="col">Email</th>
-      
+               <th scope="col">Job Title</th>
                <th scope="col">Company</th>
                 <th scope="col">Department</th>
                  <th scope="col">Applied Post</th>
@@ -415,6 +415,7 @@
                     <td>{{list.name}}</td>
                     <td>{{list.mobileNumber}}</td>
                     <td>{{list.email}}</td>
+                    <td>{{list.jobTitle}}</td>
                     <td>{{list.company}}</td>
                     <td>{{list.department}}</td>
                     <td>{{list.appliedPost}}</td> 

@@ -48,13 +48,17 @@
           </div>
 
           <div class="form-group clearfix">
-            <label class="main-title control-label col-sm-2  p-0  pt-1" for="name" style="float: left;">Full Name:
+            <label class="main-title control-label col-sm-2  p-0  pt-1" for="name" style="float: left;">Full Name:  <span
+                class="text-danger">*</span>
             </label>
             <div class="col-sm-9 p-0 m-0" style="float: left;">
               <div style="padding: 0px; width: 94.5%; font-size: 13px; float: left;">
-                <input disabled formControlName="name" type="text"
+                <input  formControlName="name" type="text"
                   class="main-input form-control form-control-sm input-sm input-sm-*" id="name"
-                  placeholder="Enter Full Name..." name="name">
+                  placeholder="Enter Full Name..." name="name"[ngClass]="{ 'is-invalid': name.invalid && (name.dirty || name.touched) }">
+                   <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger mt-1 fs-4">
+                  <small *ngIf="name.errors.required">Full Name is required.</small>
+                </div>
               </div>
             </div>
           </div>
@@ -66,7 +70,7 @@
               <div style="padding: 0px; width: 94.5%; font-size: 13px; float: left;">
                 <input formControlName="nidN" type="number"
                   class="main-input form-control form-control-sm input-sm input-sm-*" id="nidN" placeholder=""
-                  name="nidN" [ngClass]="{ 'is-invalid': nidN.invalid && (nidN.dirty || dateOfBirth.touched) }">
+                  name="nidN" [ngClass]="{ 'is-invalid': nidN.invalid && (nidN.dirty || nidN.touched) }">
                 <div *ngIf="nidN.invalid && (nidN.dirty || nidN.touched)" class="text-danger mt-1 fs-4">
                   <small *ngIf="nidN.errors.required">NID is required.</small>
                 </div>
@@ -594,14 +598,14 @@
                 class="mb-3 border-bottom pb-2">
                 <div class="row align-items-center">
                   <!-- Qualification Type -->
-                  <div class="col-lg-1 col-11  mb-2 academicQlification">
+                  <!-- <div class="col-lg-1 col-11  mb-2 academicQlification">
                     <div
                       style="width: 90.5%; padding-top: 12px;padding-bottom: 12px; color: black; background-color: #8FBC8F;"
                       class="badge">{{ qualificationType[i] }}</div>
-                  </div>
+                  </div> -->
 
                   <!-- Exam -->
-                  <div class="col-lg-1 col-11  mb-2">
+                  <!-- <div class="col-lg-1 col-11  mb-2">
                     <label [for]="'degree'+i">Exam <span class="text-danger">*</span></label>
                     <input style="width: 90.5%;" type="text" class="form-control form-control-sm"
                       formControlName="degree" [id]="'degree'+i" placeholder=""
@@ -611,7 +615,26 @@
                       class="invalid-feedback">
                       Degree is required
                     </div>
-                  </div>
+                  </div> -->
+
+
+
+         <div class="col-lg-2 col-11  mb-2">
+              <label [for]="'degree'+i">Exam <span class="text-danger">*</span></label>
+
+               <ng-select2 class="main-input"  formControlName="degree" [options]="options"
+                          [allowClear]="true" [id]="'degree'+i" name="degree" [data]="degreeList"
+                          [placeholder]="'Select Degree '" 
+                          [ngClass]="{ 'is-invalid': (formSubmitted || qualification.get('degree')?.touched) && qualification.get('degree')?.invalid }"
+                          >
+                         </ng-select2>
+         
+              <div *ngIf="(formSubmitted || qualification.get('degree')?.touched) && qualification.get('degree')?.invalid" 
+                   class="invalid-feedback">
+                Degree is required
+              </div>
+            </div> 
+
 
                   <!-- University/Board -->
                   <div class="col-lg-2 col-11  mb-2">
@@ -681,7 +704,7 @@
                   <!-- Remove Button -->
                   <div class="col-lg-1 col-11 col-md-2 mt-md-0 removeButton">
                     <button type="button" class="btn btn-danger btn-sm  remove-btn"
-                      (click)="removeAcademicQualification(i)" [disabled]="academicQualifications.length <= 3">
+                      (click)="removeAcademicQualification(i)" [disabled]="academicQualifications.length <= 1">
                       <i class="fa fa-minus"></i> Remove
                     </button>
                   </div>
@@ -761,7 +784,7 @@
                     </div>
                   </div>
 
-                  <div class="col-lg-2 col-11 col-md-6 mb-2">
+                  <!-- <div class="col-lg-2 col-11 col-md-6 mb-2">
                     <label [for]="'priodToDate'+i">Period To Date: - {{i+1}}</label>
                     <input style="width: 90.5%;" type="date" class="form-control form-control-sm"
                       formControlName="priodToDate" [id]="'priodToDate'+i"
@@ -771,7 +794,37 @@
                       class="invalid-feedback">
                       Period To Date is required
                     </div>
-                  </div>
+                  </div> -->
+
+
+                  
+                <div class="col-lg-2 col-11 col-md-6 mb-2">
+              <div style=" display: flex;" class="priodandtext">
+                <label [for]="'priodToDate'+i">To Date: - {{i+1}}</label>
+              <div style="align-items: end; margin-left: 10px;" class="form-check">
+                  <label>
+                 <input (click)="isJobRunning($event, i)"  type="checkbox"
+                  [checked]="experience.get('isRunning')?.value === 'Continuing'">Is Running?
+                   </label>
+              </div>
+            </div>
+              <input *ngIf="!experience.get('isRunning')?.value" style="width: 90.5%;" type="date" class="form-control form-control-sm"
+                     formControlName="priodToDate"
+                     [id]="'priodToDate'+i"
+                     [ngClass]="{ 'is-invalid': (formSubmitted || experience.get('priodToDate')?.touched) && experience.get('priodToDate')?.invalid }">
+
+                     <input *ngIf="experience.get('isRunning')?.value" type="text"
+                      formControlName="isRunning"
+                      class="form-control form-control-sm"
+                      value="Continuing" disabled>
+              <div *ngIf="(formSubmitted || experience.get('priodToDate')?.touched) && experience.get('priodToDate')?.invalid" 
+                   class="invalid-feedback">
+                Period To Date is required
+              </div>
+            </div> 
+
+
+
 
                   <!-- Department & Designation -->
                   <div class="col-lg-2 col-11 col-md-6 mb-2">

@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CTG-ERPWebApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+574671d208cad8f7611d03ed6c24d0db234af6bd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+388916cb7dcc50abe44a49875585d052ee68629f")]
 [assembly: System.Reflection.AssemblyProductAttribute("CTG-ERPWebApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CTG-ERPWebApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

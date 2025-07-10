@@ -33,7 +33,7 @@ namespace DataFactories.Infrastructure.business.jobpost
 
 
     public async Task<object> SaveUpdate(string _mJsonData, string _sklJsonData,  string _resJsonData, string _reqJsonData,
-      string _othReqJsonData, string _bnfJsonData, vmCmnParameter param )
+    string _expJsonData, string _othReqJsonData, string _bnfJsonData, vmCmnParameter param )
     {
         object referenceId = 0; string message = string.Empty; bool resstate = false;
         OraGeneric_vmCmnParameter = new GenericFactoryOracle<vmCmnParameter>();
@@ -74,6 +74,15 @@ namespace DataFactories.Infrastructure.business.jobpost
                     ocmd.Parameters.Add("Mstr_OID", OracleDbType.Varchar2).Value = mstrRes;
                     ocmd.Parameters.Add("JsonData_Requirement", OracleDbType.Clob).Value = _reqJsonData;
                     result = await OraGeneric_vmCmnParameter.ExecuteNonQueryOutString(StoredProcedure.Ora_SpSet_JobPostReq, ocmd, "mresult", StaticInfos.conStringOracle.ToString());
+                }
+
+                if (!string.IsNullOrEmpty(mstrRes) && mstrRes != "null")
+                {
+                    ocmd = new OracleCommand();
+                    ocmd.Parameters.Add("mresult", OracleDbType.Varchar2, 50).Direction = ParameterDirection.Output;
+                    ocmd.Parameters.Add("Mstr_OID", OracleDbType.Varchar2).Value = mstrRes;
+                    ocmd.Parameters.Add("JsonData_Experience", OracleDbType.Clob).Value = _expJsonData;
+                    result = await OraGeneric_vmCmnParameter.ExecuteNonQueryOutString(StoredProcedure.Ora_SpSet_JobPostExp, ocmd, "mresult", StaticInfos.conStringOracle.ToString());
                 }
 
                 if (!string.IsNullOrEmpty(mstrRes) && mstrRes != "null")
@@ -189,7 +198,8 @@ namespace DataFactories.Infrastructure.business.jobpost
         public async Task<object> GetByID(vmCmnParameter cparam)
         {
             OraGeneric_vmCmnParameter = new GenericFactoryOracle<vmCmnParameter>();
-            string jobPostMaster = string.Empty, jobSkill = string.Empty, jobBenefit = string.Empty, jobRequirement = string.Empty, jobOtherRequirement = string.Empty, jobResponsibility = string.Empty; 
+            string jobPostMaster = string.Empty, jobSkill = string.Empty, jobBenefit = string.Empty, jobRequirement = string.Empty, jobOtherRequirement = string.Empty, jobResponsibility = string.Empty;
+            string jobExperience = string.Empty;
             try
             {
                
@@ -206,6 +216,7 @@ namespace DataFactories.Infrastructure.business.jobpost
                     jobSkill = await OraGeneric_vmCmnParameter.ExecuteNonQueryOutClob(StoredProcedure.Ora_SpGet_JobPostSkillById, ht, "gresult", StaticInfos.conStringOracle.ToString());
                     jobBenefit = await OraGeneric_vmCmnParameter.ExecuteNonQueryOutClob(StoredProcedure.Ora_SpGet_JobBenifitById, ht, "gresult", StaticInfos.conStringOracle.ToString());
                     jobRequirement = await OraGeneric_vmCmnParameter.ExecuteNonQueryOutClob(StoredProcedure.Ora_SpGet_JobRequirementById, ht, "gresult", StaticInfos.conStringOracle.ToString());
+                    jobExperience = await OraGeneric_vmCmnParameter.ExecuteNonQueryOutClob(StoredProcedure.Ora_SpGet_JobExperienceById, ht, "gresult", StaticInfos.conStringOracle.ToString());
                     jobOtherRequirement = await OraGeneric_vmCmnParameter.ExecuteNonQueryOutClob(StoredProcedure.Ora_SpGet_JobOtherRequirementById, ht, "gresult", StaticInfos.conStringOracle.ToString());
                     jobResponsibility = await OraGeneric_vmCmnParameter.ExecuteNonQueryOutClob(StoredProcedure.Ora_SpGet_JobResponsibilityById, ht, "gresult", StaticInfos.conStringOracle.ToString());
                 }
@@ -228,6 +239,7 @@ namespace DataFactories.Infrastructure.business.jobpost
                 jobSkill,
                 jobBenefit,
                 jobRequirement,
+                jobExperience,
                 jobOtherRequirement,
                 jobResponsibility
 

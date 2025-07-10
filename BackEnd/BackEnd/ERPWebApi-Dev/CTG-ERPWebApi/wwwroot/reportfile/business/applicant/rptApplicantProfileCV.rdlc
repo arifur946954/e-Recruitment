@@ -3664,7 +3664,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Priod To Date</Value>
+                              <Value>Priod From Date</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -3706,14 +3706,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox24">
+                    <Textbox Name="priod_from_date">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!priod_to_date.Value</Value>
+                              <Value>=Fields!priod_from_date.Value</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>
@@ -3722,7 +3722,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox24</rd:DefaultName>
+                      <rd:DefaultName>priod_from_date</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -3769,7 +3769,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Priod From Date</Value>
+                              <Value>Priod To Date</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -3818,7 +3818,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!priod_from_date.Value</Value>
+                              <Value>=IIf(IsNothing(Fields!isRunning.Value) OR Trim(Fields!isRunning.Value) = "", Fields!priod_to_date.Value, Fields!isRunning.Value)</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>
@@ -4679,6 +4679,54 @@
         <rd:TableAdapterName />
       </rd:DataSetInfo>
     </DataSet>
+    <DataSet Name="DataSet4">
+      <Query>
+        <DataSourceName>SpeechBubbleDataSet</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="ProfCirtificateOid">
+          <DataField>ProfCirtificateOid</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="certificatecode">
+          <DataField>certificatecode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="course_name">
+          <DataField>course_name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="institution">
+          <DataField>institution</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="duration">
+          <DataField>duration</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="achievment_date">
+          <DataField>achievment_date</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="isactive">
+          <DataField>isactive</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="applicant_oid">
+          <DataField>applicant_oid</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>SpeechBubbleDataSet</rd:DataSetName>
+        <rd:SchemaPath>E:\Project-3\HR Job App\BackEnd\BackEnd\ERPWebApi-Dev\ReportsDesigner\SpeechBubbleDataSet.xsd</rd:SchemaPath>
+        <rd:TableName>ApplicantPrfCirt</rd:TableName>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
+      </rd:DataSetInfo>
+    </DataSet>
     <DataSet Name="DataSet3">
       <Query>
         <DataSourceName>SpeechBubbleDataSet</DataSourceName>
@@ -4733,59 +4781,15 @@
           <DataField>location</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="isRunning">
+          <DataField>isRunning</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>SpeechBubbleDataSet</rd:DataSetName>
-        <rd:SchemaPath>E:\Project-3\HR Job App\BackEnd\BackEnd\ERPWebApi-Dev\ReportsDesigner\SpeechBubbleDataSet.xsd</rd:SchemaPath>
+        <rd:SchemaPath>E:\Project-3\HR Job App V2\BackEnd\BackEnd\ERPWebApi-Dev\ReportsDesigner\SpeechBubbleDataSet.xsd</rd:SchemaPath>
         <rd:TableName>ApplicantWrkExp</rd:TableName>
-        <rd:TableAdapterFillMethod />
-        <rd:TableAdapterGetDataMethod />
-        <rd:TableAdapterName />
-      </rd:DataSetInfo>
-    </DataSet>
-    <DataSet Name="DataSet4">
-      <Query>
-        <DataSourceName>SpeechBubbleDataSet</DataSourceName>
-        <CommandText>/* Local Query */</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="ProfCirtificateOid">
-          <DataField>ProfCirtificateOid</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="certificatecode">
-          <DataField>certificatecode</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="course_name">
-          <DataField>course_name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="institution">
-          <DataField>institution</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="duration">
-          <DataField>duration</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="achievment_date">
-          <DataField>achievment_date</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="isactive">
-          <DataField>isactive</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="applicant_oid">
-          <DataField>applicant_oid</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <rd:DataSetInfo>
-        <rd:DataSetName>SpeechBubbleDataSet</rd:DataSetName>
-        <rd:SchemaPath>E:\Project-3\HR Job App\BackEnd\BackEnd\ERPWebApi-Dev\ReportsDesigner\SpeechBubbleDataSet.xsd</rd:SchemaPath>
-        <rd:TableName>ApplicantPrfCirt</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
         <rd:TableAdapterName />

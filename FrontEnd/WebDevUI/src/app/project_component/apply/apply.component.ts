@@ -57,6 +57,7 @@ export class ApplyComponent implements OnInit {
   public skillList: any;
   public benifitList: any;
   public requirementList: any;
+  public experienceList: any;
   public otherRequirementList: any;
   public responsibilityList: any;
   public masterList: any;
@@ -79,6 +80,7 @@ export class ApplyComponent implements OnInit {
 
   bloodGroupList: string[] = ['A+', 'B+', 'O+', "AB+", 'A-', 'B-', 'O-', "AB-"];
   qualificationType: string[] = ['SSC/Equivalent', 'HSC/Deploma', 'Bachelor', 'Masters', 'Other'];
+   degreeList: string[] = ['JSC/Equivalent','SSC/Equivalent', 'HSC/Diploma', 'Bachelor', 'Masters', 'Other'];
   WorkOrderStatus: Array<{ value: string, label: string }> = [
     { value: '1', label: 'Work Order InComing' },
     { value: '0', label: 'Work Order  OutGoing' },
@@ -376,6 +378,47 @@ export class ApplyComponent implements OnInit {
     }
   }
 
+// isJobRunning(event: Event, index: number) {
+//   debugger
+  
+//   const isChecked = (event.target as HTMLInputElement).checked;
+//   const experience = this.workExperiences.at(index);
+
+//   experience.get('isRunning')?.setValue(isChecked);
+
+//   if (isChecked) {
+//     experience.get('priodToDate')?.disable();
+//     experience.get('priodToDate')?.setValue(null); 
+//     experience.get('isRunning')?.setValue('Continuing');// Optional: clear date
+//   } else {
+//     experience.get('priodToDate')?.enable();
+//   }
+// }
+
+
+isJobRunning(event: Event, index: number) {
+  debugger
+  const isChecked = (event.target as HTMLInputElement).checked;
+  const experience = this.workExperiences.at(index);
+
+  if (isChecked) {
+    experience.get('isRunning')?.setValue('Continuing');
+    experience.get('priodToDate')?.setValue(null);
+    experience.get('priodToDate')?.disable();
+  } else {
+    experience.get('isRunning')?.setValue(null);
+    experience.get('priodToDate')?.enable();
+  }
+}
+
+
+
+
+
+
+
+
+
   reset() {
 
   }
@@ -391,7 +434,7 @@ export class ApplyComponent implements OnInit {
       appliedPost: new FormControl(null),
       mobileNumber: new FormControl(null),
       //campaign: new FormControl(null, Validators.required),
-      name: new FormControl(null),
+      name: new FormControl(null, Validators.required),
       fatherName: new FormControl(null, Validators.required),
       motherName: new FormControl(null, Validators.required),
       nidN: new FormControl(null, Validators.required),
@@ -453,7 +496,10 @@ export class ApplyComponent implements OnInit {
   get dateOfBirth() {
     return this.requirementForm.get('dateOfBirth');
   }
-  get fatherName() {
+  get name() {
+    return this.requirementForm.get('name');
+  }
+    get fatherName() {
     return this.requirementForm.get('fatherName');
   }
   get motherName() {
@@ -994,7 +1040,7 @@ export class ApplyComponent implements OnInit {
 
   // Add initial academic qualifications
   addInitialAcademicQualifications() {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 1; i++) {
       this.addAcademicQualification();
     }
   }
@@ -1017,7 +1063,7 @@ export class ApplyComponent implements OnInit {
 
   // Remove an academic qualification from the FormArray
   removeAcademicQualification(index: number) {
-    if (this.academicQualifications.length > 3) { // Ensure at least 3 qualifications remain
+    if (this.academicQualifications.length > 1) { // Ensure at least 1 qualifications remain
       this.academicQualifications.removeAt(index);
     }
   }
@@ -1039,7 +1085,8 @@ export class ApplyComponent implements OnInit {
       jobDescription: [null, Validators.required],
       department: [null, Validators.required],
       designation: [null, Validators.required],
-      jobLocation: [null]
+      jobLocation: [null],
+      isRunning:[null]//add extra
     });
 
     this.workExperiences.push(experienceGroup);
@@ -1146,6 +1193,7 @@ export class ApplyComponent implements OnInit {
         this.skillList = JSON.parse(this.res.resdata.jobSkill)
         this.benifitList = JSON.parse(this.res.resdata.jobBenefit)
         this.requirementList = JSON.parse(this.res.resdata.jobRequirement)
+        this.experienceList=JSON.parse(this.res.resdata.jobExperience)
         this.otherRequirementList = JSON.parse(this.res.resdata.jobOtherRequirement)
         this.responsibilityList = JSON.parse(this.res.resdata.jobResponsibility)
         console.log("this.Total data -------------------", (this.masterList))
@@ -1668,6 +1716,7 @@ export class ApplyComponent implements OnInit {
         department: exp.department,
         designation: exp.designation,
         jobLocation: exp.location,
+        isRunning: [exp.isRunning === 'Continuing' ? 'Continuing' : null]//add extra heere 
       });
       this.workExperiences.push(wrkExpGroup);
     });

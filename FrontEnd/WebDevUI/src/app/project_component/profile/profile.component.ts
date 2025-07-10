@@ -84,6 +84,7 @@ export class ProfileComponent implements OnInit {
   genderList:string[]=['Male','Female','Other'];
   maritialStatusList:string[]=['Married','Unmarried'];
   religionList: string[] = ['Islam', 'Hindu', 'Christianity', 'Buddhism', 'Other'];
+    degreeList: string[] = ['JSC/Equivalent','SSC/Equivalent', 'HSC/Diploma', 'Bachelor', 'Masters', 'Other'];
   image: FileList | null = null;
   signature: FileList | null = null;
   cv: FileList | null = null;
@@ -149,6 +150,8 @@ export class ProfileComponent implements OnInit {
     this.getParAllDivision();
     //this.getListByPage(this.pageSize);
     this.GetJobIdList(this.loggedUserId)
+    this.getParofileInfoByuserID(this.loggedUserId)
+    
     
 
   //    this._dataservice.callProfileFunction$.subscribe((data) => {
@@ -397,7 +400,7 @@ createForm() {
     appliedPost: new FormControl(null),
     mobileNumber: new FormControl(null),
     //campaign: new FormControl(null, Validators.required),
-    name:new FormControl(null),
+    name:new FormControl(null, Validators.required),
     fatherName: new FormControl(null, Validators.required),
     motherName: new FormControl(null, Validators.required),
     nidN: new FormControl(null, Validators.required),
@@ -459,6 +462,10 @@ get birthPlace() {
 get dateOfBirth() {
   return this.requirementForm.get('dateOfBirth');
 }
+get name() {
+  return this.requirementForm.get('name');
+}
+
 get fatherName() {
   return this.requirementForm.get('fatherName');
 }
@@ -935,6 +942,7 @@ public uImgUrl:string='reqform/updateFile';
 
 
 
+
 //Save form
 public _saveUrl: string = 'reqform/saveupdate';
 onSubmitFileForm(): void {
@@ -988,7 +996,7 @@ get academicQualifications(): FormArray {
 
 // Add initial academic qualifications
 addInitialAcademicQualifications() {
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 1; i++) {
     this.addAcademicQualification();
   }
 }
@@ -1011,7 +1019,7 @@ addAcademicQualification() {
 
 // Remove an academic qualification from the FormArray
 removeAcademicQualification(index: number) {
-  if (this.academicQualifications.length > 3) { // Ensure at least 3 qualifications remain
+  if (this.academicQualifications.length > 1) { // Ensure at least 3 qualifications remain
     this.academicQualifications.removeAt(index);
   }
 }
@@ -1033,7 +1041,8 @@ addExperience() {
     jobDescription: [null, Validators.required],
     department: [null, Validators.required],
     designation: [null, Validators.required],
-    jobLocation: [null]
+    jobLocation: [null],
+    isRunning:[null]
   });
 
   this.workExperiences.push(experienceGroup);
@@ -1435,6 +1444,31 @@ public _fileUrl:string='reqform/getImage'
   }
 
 
+public _getUserInUrl: string = 'ereqdropdown/getProfileInfoById';
+getParofileInfoByuserID(id:string) {
+  debugger
+    var list: Array<{ id, text }> = [{ id: 0, text: "Please Select" }];
+    var apiUrl = this._getUserInUrl;
+    var param=id;
+    this._dataservice.getbyid(apiUrl,param)
+        .subscribe(
+            response => {
+                this.res = response;
+                if(this.res){
+                  var oid=this.res.resdata.listuserInfo[0].profileOid
+                  this.edit({ model: { oid: oid } });
+
+                }
+              console.log("this.res is detils ny id  ssssss",this.res)
+
+            }, error => {
+                console.log(error);
+            });
+}
+
+
+
+
 
 
 //EDIT UPDATE DATA
@@ -1445,11 +1479,7 @@ edit(modelEvnt) {
   this.isEdit=true;
   this.alApply=true
   debugger
-  //  this.masterDiv=modelEvnt.masterDiv;
-  //  this.applyForm=modelEvnt.applyForm;
 
-   //this.masterDiv=false;
-   //this.applyForm=true;
    console.log("master dibvvvvvvvvvvvvvvvvvv is ",modelEvnt)
     debugger;
     console.log("modelEvnt",modelEvnt)
@@ -1604,6 +1634,7 @@ edit(modelEvnt) {
                 department: exp.department,
                 designation: exp.designation,
                 jobLocation: exp.location,
+                isRunning: [exp.isRunning === 'Continuing' ? 'Continuing' : null]//add extra heere 
               });
               this.workExperiences.push(wrkExpGroup);
             });
@@ -1644,6 +1675,23 @@ edit(modelEvnt) {
 //   }
 // }
 
+
+
+
+isJobRunning(event: Event, index: number) {
+  debugger
+  const isChecked = (event.target as HTMLInputElement).checked;
+  const experience = this.workExperiences.at(index);
+
+  if (isChecked) {
+    experience.get('isRunning')?.setValue('Continuing');
+    experience.get('priodToDate')?.setValue(null);
+    experience.get('priodToDate')?.disable();
+  } else {
+    experience.get('isRunning')?.setValue(null);
+    experience.get('priodToDate')?.enable();
+  }
+}
 
 
 convertOracleDateToInput(dateString: string): string {

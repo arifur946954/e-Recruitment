@@ -56,12 +56,14 @@ export class JobPostComponent implements OnInit {
   public skillList:any;
   public benifitList:any;
   public requirementList:any;
+  public experienceList:any;
   public otherRequirementList:any;
   public responsibilityList:any;
   public masterList:any;
   public accQlfList:any;
   public wrkExpList:any;
   public proCirtificateList:any;
+   genderList: string[] = ['Male', 'Female', 'Both'];
   
 
 
@@ -168,10 +170,10 @@ sendToList(ev) {
     
       education: new FormControl(null, Validators.required),
       experience: new FormControl(null, Validators.required),
-      workPlace: new FormControl(null, Validators.required),
+      workPlace: null,
       employeeStatus: new FormControl(null, Validators.required),
-      jobLocation: new FormControl(null, Validators.required),
-      criteria: null,
+      jobLocation:new FormControl(null, Validators.required),
+      gender: new FormControl(null, Validators.required),
       address: new FormControl(null, Validators.required),
       business: new FormControl(null, Validators.required),
       salaryRange: new FormControl(null, Validators.required),
@@ -179,6 +181,7 @@ sendToList(ev) {
       applicantSkill: this.formBuilder.array([]), 
       applicantResponsibility: this.formBuilder.array([]),
       applicantRequirement: this.formBuilder.array([]),
+      applicantExperience: this.formBuilder.array([]),
       applicantOtherRequirement: this.formBuilder.array([]),
       applicantBenifit: this.formBuilder.array([]),
       
@@ -200,10 +203,10 @@ sendToList(ev) {
     
       education: new FormControl(null, Validators.required),
       experience: new FormControl(null, Validators.required),
-      workPlace: new FormControl(null, Validators.required),
+      workPlace: null,
       employeeStatus: new FormControl(null, Validators.required),
       jobLocation: new FormControl(null, Validators.required),
-      criteria: new FormControl(null, Validators.required),
+      gender: new FormControl(null, Validators.required),
       address: new FormControl(null, Validators.required),
       business:new FormControl(null, Validators.required),
       salaryRange: new FormControl(null, Validators.required),
@@ -211,6 +214,7 @@ sendToList(ev) {
       applicantSkill: this.formBuilder.array([]), 
       applicantResponsibility: this.formBuilder.array([]),
       applicantRequirement: this.formBuilder.array([]),
+      applicantExperience: this.formBuilder.array([]),
       applicantOtherRequirement: this.formBuilder.array([]),
       applicantBenifit: this.formBuilder.array([]),
       
@@ -296,6 +300,25 @@ sendToList(ev) {
     this.applicantRequirement.removeAt(index);
   }
 
+  //EXPERIENCE
+  get applicantExperience(): FormArray {
+    return this.jobPostForm.get('applicantExperience') as FormArray;
+  }
+  
+  addExperience() {
+    const ExperienceGroup = this.formBuilder.group({
+      applicantExperienceId: null,
+      jobPostId: null,
+      experience: [null, Validators.required],
+    });
+  
+    this.applicantExperience.push(ExperienceGroup);
+  }
+  
+  removeExperience(index: number) {
+    this.applicantExperience.removeAt(index);
+  }
+
 
 
 //OTHER REQUIREMENT
@@ -354,6 +377,7 @@ sendToList(ev) {
     delete formValues.applicantSkill;
     delete formValues.applicantResponsibility;
     delete formValues.applicantRequirement;
+    delete formValues.applicantExperience;
     delete formValues.applicantOtherRequirement;
     delete formValues.applicantBenifit;
     
@@ -362,6 +386,7 @@ sendToList(ev) {
 
     const appResponsibility = this.applicantResponsibility.value;
     const appRequirement = this.applicantRequirement.value;
+    const appExperience = this.applicantExperience.value;
     console.log("appRequirement",appRequirement)
     const appOtherRequirement = this.applicantOtherRequirement.value;
     const appBenifit = this.applicantBenifit.value;
@@ -374,7 +399,7 @@ sendToList(ev) {
       strId2: this.userID 
     };
     
-    const ModelsArray = [param, [jobPostform], appSkill, appResponsibility,appRequirement,appOtherRequirement,appBenifit];
+    const ModelsArray = [param, [jobPostform], appSkill, appResponsibility,appRequirement,appExperience,appOtherRequirement,appBenifit];
     console.log("ModelsArray",ModelsArray)
     this._dataservice.postMultipleModel(this._saveUrl, ModelsArray)
       .subscribe(response => {
@@ -411,7 +436,7 @@ debugger
       workPlace: null,
       employeeStatus: null,
       jobLocation: null,
-      criteria: null,
+      gender: null,
       address:null,
       business: null,
       salaryRange: null,
@@ -420,6 +445,7 @@ debugger
       applicantSkill: this.applicantSkill.clear(),
       applicantResponsibility: this.applicantResponsibility.clear(),
       applicantRequirement: this.applicantRequirement.clear(),
+       applicantExperience: this.applicantExperience.clear(),
       applicantOtherRequirement: this.applicantOtherRequirement.clear(),
       applicantBenifit: this.applicantBenifit.clear()
       
@@ -439,6 +465,12 @@ edit(modelEvnt) {
         .subscribe(response => {
             this.res = response;
             console.log("this.Total data ",this.res)
+            this.clearApplicantSkills();
+            this.clearApplicantBenefit();
+            this.clearApplicantRequirement();
+            this.clearApplicantExperience();
+            this.clearApplicantOtherRequirement();
+            this.clearesponsiboility();
             if(this.res.resdata.jobSkill){
               var jobSkill = JSON.parse(this.res.resdata.jobSkill);
                this.updateSkill(jobSkill);
@@ -450,6 +482,10 @@ edit(modelEvnt) {
             if(this.res.resdata.jobRequirement){
               var requirement = JSON.parse(this.res.resdata.jobRequirement);
                 this.updateRequirement(requirement)
+            }
+              if(this.res.resdata.jobExperience){
+              var experience = JSON.parse(this.res.resdata.jobExperience);
+                this.updateExperience(experience)
             }
             if(this.res.resdata.jobOtherRequirement){
                var otherRequirement = JSON.parse(this.res.resdata.jobOtherRequirement);
@@ -482,7 +518,7 @@ edit(modelEvnt) {
                 workPlace: jobPost.workPlace,
                 employeeStatus: jobPost.employeeStatus,
                 jobLocation: jobPost.jobLocation,
-                criteria:jobPost.criteria,
+                gender:jobPost.gender,
                 address: jobPost.address,
                 business: jobPost.business,
                 salaryRange: jobPost.salaryRange,
@@ -490,6 +526,7 @@ edit(modelEvnt) {
                 applicantSkill: this.formBuilder.array([]), 
                 applicantResponsibility: this.formBuilder.array([]),
                 applicantRequirement: this.formBuilder.array([]),
+                applicantExperience: this.formBuilder.array([]),
                 applicantOtherRequirement: this.formBuilder.array([]),
                 applicantBenifit: this.formBuilder.array([]),
 
@@ -561,6 +598,27 @@ requirement.forEach(req => {
 clearApplicantRequirement() {
 while (this.applicantRequirement.length !== 0) {
   this.applicantRequirement.removeAt(0);
+}
+}
+
+
+
+//UPDATE EXPERIENCE
+updateExperience(experience: any[]) {
+this.clearApplicantExperience();
+debugger;
+experience.forEach(exp => {
+   var expGroup = this.formBuilder.group({
+    applicantExperienceId: exp.experienceOid,
+    jobPostId: exp.jbPostId,
+    experience: exp.experience,
+  });
+  this.applicantExperience.push(expGroup);
+});
+}
+clearApplicantExperience() {
+while (this.applicantExperience.length !== 0) {
+  this.applicantExperience.removeAt(0);
 }
 }
 
@@ -726,6 +784,13 @@ const confirmDelete = confirm("Are you sure you want to delete this item?");
 public masterListDetails:any;
   public _getjobbyIdUrl: string = 'jobpost/getbyid';
   showJobDetails(modelEvnt) {
+      this.masterList=[];
+      this.skillList=[];
+      this.benifitList=[];
+      this.requirementList=[];
+      this.experienceList=[];
+      this.otherRequirementList=[];
+      this.responsibilityList=[];
       debugger;
       this.jobShowDiv=true;
       console.log("modelEvnt",modelEvnt)
@@ -735,22 +800,18 @@ public masterListDetails:any;
           .subscribe(response => {
            
               this.res = response;
-         
+              
+
               this.masterList=JSON.parse(this.res.resdata.jobPostMaster)
               this.masterListDetails=this.masterList[0];
               console.log("this.Total test test -------------------",(this.masterListDetails))
               this.skillList=JSON.parse(this.res.resdata.jobSkill)
               this.benifitList=JSON.parse(this.res.resdata.jobBenefit)
               this.requirementList=JSON.parse(this.res.resdata.jobRequirement)
+              this.experienceList=JSON.parse(this.res.resdata.jobExperience)
               this.otherRequirementList=JSON.parse(this.res.resdata.jobOtherRequirement)
               this.responsibilityList=JSON.parse(this.res.resdata.jobResponsibility)
-              console.log("this.Total data xxxxxxxxxxxxxx-------------------",(this.masterList))
-              console.log("this.Total skillList ",(this.skillList))
-              console.log("this.Total benifitList ",(this.benifitList))
-              console.log("this.Total requirementList ",(this.requirementList))
-              console.log("this.Total otherRequirementList ",(this.otherRequirementList))
-              console.log("this.Total responsibilityList ",(this.responsibilityList))
-
+         
         
            
 

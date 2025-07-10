@@ -54,6 +54,7 @@ export const routes: Routes = [
         component: PagesComponent, children: [
             { path: '', redirectTo: '/login', pathMatch: 'full' },
             { path: '', redirectTo: '/register', pathMatch: 'full' },
+            { path: '', redirectTo: '/forgotpassword', pathMatch: 'full' },
             { path: '', redirectTo: '/requirement', pathMatch: 'full' },
     
             
@@ -93,6 +94,7 @@ export const routes: Routes = [
     },
     { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) },
     { path: 'register', loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule) },
+      { path: 'forgotpassword', loadChildren: () => import('./pages/forgotpass/forgotpass.module').then(m => m.ForgotPassModule) },
     { path: 'requirement', loadChildren: () => import('./pages/applicantform/applicantform.module').then(m => m.ApplicantFormModule) },
    
    

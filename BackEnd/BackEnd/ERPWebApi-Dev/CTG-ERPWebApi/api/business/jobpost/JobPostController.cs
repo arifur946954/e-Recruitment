@@ -52,12 +52,13 @@ public class JobPostController : ControllerBase
                 string JsonData_Skill = data[2].ToString();
                 string JsonData_Resp = data[3].ToString();
                 string JsonData_Req = data[4].ToString();
-                string JsonData_Ot_Req = data[5].ToString();
-                string JsonData_Benf = data[6].ToString();
+                string JsonData_Exp = data[5].ToString();
+                string JsonData_Ot_Req = data[6].ToString();
+                string JsonData_Benf = data[7].ToString();
    
                 if (!string.IsNullOrEmpty(JsonData_Mstr) )
                 {
-                    resdata = await _manager.SaveUpdate(JsonData_Mstr, JsonData_Skill, JsonData_Resp, JsonData_Req, JsonData_Ot_Req, JsonData_Benf, cparam);
+                    resdata = await _manager.SaveUpdate(JsonData_Mstr, JsonData_Skill, JsonData_Resp, JsonData_Req, JsonData_Exp, JsonData_Ot_Req, JsonData_Benf, cparam);
                 }
             }
             catch (Exception ex)

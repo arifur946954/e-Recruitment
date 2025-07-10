@@ -25,12 +25,12 @@ import { delay } from 'rxjs/operators';
 
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ["./login.component.scss"]
+  selector: 'app-forgotpass',
+  templateUrl: './forgotpass.component.html',
+  styleUrls: ["./forgotpass.component.scss"]
 })
 
-export class LoginComponent {
+export class ForgotPassComponent {
 
   public res: any;
 
@@ -133,13 +133,6 @@ export class LoginComponent {
         });
     }
   }
-
-showPassword = false;
-
-togglePassword() {
-  this.showPassword = !this.showPassword;
-}
-
 
   ngAfterViewInit() {
     setTimeout(() => {

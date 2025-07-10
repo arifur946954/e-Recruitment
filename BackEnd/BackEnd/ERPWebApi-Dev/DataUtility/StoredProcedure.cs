@@ -648,6 +648,7 @@
         public const string Ora_SpSet_JobPostSkill = "JOBPOSTSETUP.Set_JobPostSkill";
         public const string Ora_SpSet_JobPostResp = "JOBPOSTSETUP.Set_JobPostResponsiblity";
         public const string Ora_SpSet_JobPostReq = "JOBPOSTSETUP.Set_JobPostRequirement";
+        public const string Ora_SpSet_JobPostExp = "JOBPOSTSETUP.Set_JobPostExperience";
         public const string Ora_SpSet_JobPostOtReq = "JOBPOSTSETUP.Set_JobPostOtherRequirement";
         public const string Ora_SpSet_JobPostBenefit = "JOBPOSTSETUP.Set_JobPostBenifit";
         public const string Ora_SpGet_JobPostByPage = "JOBPOSTSETUP.Get_JobPostByPage"; 
@@ -657,6 +658,7 @@
         public const string Ora_SpGet_JobPostSkillById = "JOBPOSTSETUP.Get_JobPostSkillById";
         public const string Ora_SpGet_JobResponsibilityById ="JOBPOSTSETUP.Get_JobResponsibilityById";
         public const string Ora_SpGet_JobRequirementById = "JOBPOSTSETUP.Get_JobRequirementById";
+        public const string Ora_SpGet_JobExperienceById = "JOBPOSTSETUP.Get_JobExperienceById";
         public const string Ora_SpGet_JobOtherRequirementById ="JOBPOSTSETUP.Get_JobOtherRequirementById";
         public const string Ora_SpGet_JobBenifitById ="JOBPOSTSETUP.Get_JobBenifitById";
 

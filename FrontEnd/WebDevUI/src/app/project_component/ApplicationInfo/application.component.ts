@@ -280,7 +280,7 @@ getUserInfoByuserIDs(id:string) {
                list.push({ id: item.jobID, text: item.jobTitle + "-"+ "Closing Date("+ formattedDate +")"});
             });
             this.jobPostList = list;
-            console.log("total job ttile is ", this.jobPostList)
+            console.log("total job ttile is ---", this.jobPostList)
 
           }
         }, error => {
@@ -317,13 +317,29 @@ getUserInfoByuserIDs(id:string) {
    console.log(" this.post", this.post)
   }
 
+public jobId:string='';
+onJobTitleChanged(event: any) {
+  debugger
+if(event =='Please Select'){
+this.jobId='';
+}
+
+else{
+this.jobId= event
+}
+     
+
+  
+  this.getApplicationList(); 
+}
 
   
   public _applicationListUrl: string = 'candidateinfo/getallapplication';
   getApplicationList() {
      this.applicantFormList=[];
     debugger
-    this.jobTitle=this.candidateForm.get('jobTitle')?.value;
+    this.jobTitle= this.jobId;
+    //this.jobTitle=this.candidateForm.get('jobTitle')?.value;
     this.company=this.candidateForm.get('company')?.value;
     this.department=this.candidateForm.get('department')?.value;
     this.post=this.candidateForm.get('post')?.value;

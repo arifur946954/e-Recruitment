@@ -179,6 +179,22 @@ namespace CTG_ERPWebApi.api.common.dropdown
             };
         }
 
+        // GET: api/ereqdropdown/get DISTRICT BY ID
+        [HttpGet("[action]")]//BasicAuthorization
+        public async Task<object> getProfileInfoById(string id)
+        {
+            object result = null; object resdata = null;
+            try
+            {
+                resdata = await _manager.getaProfileInfoById(id);
+            }
+            catch (Exception) { }
+            return result = new
+            {
+                resdata
+            };
+        }
+
         [HttpGet("[action]")]//BasicAuthorization
         public async Task<object> getaUserInfoByRoleId(string id)
         {

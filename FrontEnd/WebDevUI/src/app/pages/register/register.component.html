@@ -161,6 +161,8 @@
                                                 class="form-control form-control-sm input-sm" id="confirmPassword"
                                                 placeholder="Confirm password" name="confirmPassword">
 
+                                                
+
                                             <small class="text-white" *ngIf="RegisterForm.hasError('passwordMismatch') && RegisterForm.get('confirmPassword')?.touched">
                                                 Password and Confirm Password do not match
                                             </small>
